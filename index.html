@@ -1,0 +1,693 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Morena La Papelera</title>
+    <style>
+        body { 
+            font-family: Arial, sans-serif; 
+            padding: 20px; 
+            max-width: 800px; 
+            margin: auto; 
+            display: none; 
+            background-color: #313030f3; /* Rojo clarito */
+            color: yellow; /* Letras en amarillo */
+        }
+        h1 {
+            text-align: center;
+            color: #d41717; /* Rojo oscuro */
+        }
+        input, select { width: 100%; padding: 8px; margin-bottom: 10px; }
+        table { width: 100%; border-collapse: collapse; }
+        th, td { padding: 8px; border: 1px solid #ccc; text-align: left; }
+        th { background-color: #ee3030c5; color: white; cursor: pointer; }
+        .status-circle { width: 20px; height: 20px; border-radius: 50%; display: inline-block; cursor: pointer; }
+        .red { background-color: red; }
+        .yellow { background-color: yellow; }
+        .green { background-color: green; }
+        textarea { width: 100%; }
+        .status-indicator {
+            margin-bottom: 10px;
+        }
+        .status-indicator div {
+            display: flex;
+            align-items: center;
+            margin-bottom: 5px;
+            cursor: pointer;
+        }
+        .status-indicator span {
+            margin-left: 10px;
+        }
+    </style>
+    <script>
+        function checkPassword() {
+            let password = prompt("Ingrese la clave para acceder:");
+            if (password === "1234") {
+                document.body.style.display = "block";
+            } else {
+                alert("Clave incorrecta. Inténtelo de nuevo.");
+                checkPassword();
+            }
+        }
+        function filterProducts() {
+            let search = document.getElementById("search").value.toLowerCase();
+            let filterBy = document.getElementById("filterBy").value;
+            let rows = document.querySelectorAll("tbody tr");
+            rows.forEach(row => {
+                let textToSearch = row.querySelector(`td:nth-child(${filterBy})`).textContent.toLowerCase();
+                row.style.display = textToSearch.includes(search) ? "" : "none";
+            });
+        }
+        function changeStatus(circle) {
+            if (circle.classList.contains("red")) {
+                circle.classList.remove("red");
+                circle.classList.add("yellow");
+            } else if (circle.classList.contains("yellow")) {
+                circle.classList.remove("yellow");
+                circle.classList.add("green");
+            } else {
+                circle.classList.remove("green");
+                circle.classList.add("red");
+            }
+        }
+        function filterByStatus(color) {
+            let rows = document.querySelectorAll("tbody tr");
+            let activeFilter = document.querySelector(`.status-indicator .${color}`).classList.toggle("active");
+            rows.forEach(row => {
+                let statusCircle = row.querySelector(".status-circle");
+                if (!activeFilter || statusCircle.classList.contains(color)) {
+                    row.style.display = "";
+                } else {
+                    row.style.display = "none";
+                }
+            });
+        }
+        window.onload = checkPassword;
+    </script>
+</head>
+<body>
+    <h1>Morena La Papelera</h1>
+    <div class="status-indicator">
+        <div onclick="filterByStatus('red')"><div class="status-circle red"></div><span>Reponer</span></div>
+        <div onclick="filterByStatus('yellow')"><div class="status-circle yellow"></div><span>Se está agotando</span></div>
+        <div onclick="filterByStatus('green')"><div class="status-circle green"></div><span>Hay mercadería</span></div>
+    </div>
+    <select id="filterBy">
+        <option value="2">Producto</option>
+        <option value="3">Categoría</option>
+        <option value="4">Descripción</option>
+    </select>
+    <input type="text" id="search" placeholder="Buscar..." onkeyup="filterProducts()">
+    <table>
+        <thead>
+            <tr>
+                <th>ESTADO</th>
+                <th>PRODUCTO</th>
+                <th>CATEGORÍA</th>
+                <th>DESCRIPCIÓN</th>
+                <th>PRECIO</th>
+                <th>NOTAS</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td><div class="status-circle red" onclick="changeStatus(this)"></div></td>
+                <td>DR 22cm x1</td>
+                <td>Bandeja</td>
+                <td>Bandeja Dorada</td>
+                <td>$450,00</td>
+                <td><textarea></textarea></td>
+            </tr>
+            <tr>
+                <td><div class="status-circle red" onclick="changeStatus(this)"></div></td>
+                <td>DR 22cm x10</td>
+                <td>Bandeja</td>
+                <td>Bandeja Dorada</td>
+                <td>$3.350,00</td>
+                <td><textarea></textarea></td>
+            </tr>
+            <tr>
+                <td><div class="status-circle red" onclick="changeStatus(this)"></div></td>
+                <td>DR 22cm x50</td>
+                <td>Bandeja</td>
+                <td>Bandeja Dorada</td>
+                <td>$15.200,00</td>
+                <td><textarea></textarea></td>
+            </tr>
+            <tr>
+                <td><div class="status-circle red" onclick="changeStatus(this)"></div></td>
+                <td>DR 24cm x1</td>
+                <td>Bandeja</td>
+                <td>Bandeja Dorada</td>
+                <td>$500,00</td>
+                <td><textarea></textarea></td>
+            </tr>
+            <tr>
+                <td><div class="status-circle red" onclick="changeStatus(this)"></div></td>
+                <td>DR 24cm x10</td>
+                <td>Bandeja</td>
+                <td>Bandeja Dorada</td>
+                <td>$3.800,00</td>
+                <td><textarea></textarea></td>
+            </tr>
+            <tr>
+                <td><div class="status-circle red" onclick="changeStatus(this)"></div></td>
+                <td>DR 24cm x50</td>
+                <td>Bandeja</td>
+                <td>Bandeja Dorada</td>
+                <td>$17.300,00</td>
+                <td><textarea></textarea></td>
+            </tr>
+            <tr>
+                <td><div class="status-circle red" onclick="changeStatus(this)"></div></td>
+                <td>DR 26cm x1</td>
+                <td>Bandeja</td>
+                <td>Bandeja Dorada</td>
+                <td>$600,00</td>
+                <td><textarea></textarea></td>
+            </tr>
+            <tr>
+                <td><div class="status-circle red" onclick="changeStatus(this)"></div></td>
+                <td>DR 26cm x10</td>
+                <td>Bandeja</td>
+                <td>Bandeja Dorada</td>
+                <td>$4.500,00</td>
+                <td><textarea></textarea></td>
+            </tr>
+            <tr>
+                <td><div class="status-circle red" onclick="changeStatus(this)"></div></td>
+                <td>DR 26cm x50</td>
+                <td>Bandeja</td>
+                <td>Bandeja Dorada</td>
+                <td>$20.500,00</td>
+                <td><textarea></textarea></td>
+            </tr>
+            <tr>
+                <td><div class="status-circle red" onclick="changeStatus(this)"></div></td>
+                <td>DR 28cm x1</td>
+                <td>Bandeja</td>
+                <td>Bandeja Dorada</td>
+                <td>$670,00</td>
+                <td><textarea></textarea></td>
+            </tr>
+            <tr>
+                <td><div class="status-circle red" onclick="changeStatus(this)"></div></td>
+                <td>DR 28cm x10</td>
+                <td>Bandeja</td>
+                <td>Bandeja Dorada</td>
+                <td>$5.150,00</td>
+                <td><textarea></textarea></td>
+            </tr>
+            <tr>
+                <td><div class="status-circle red" onclick="changeStatus(this)"></div></td>
+                <td>DR 28cm x50</td>
+                <td>Bandeja</td>
+                <td>Bandeja Dorada</td>
+                <td>$23.300,00</td>
+                <td><textarea></textarea></td>
+            </tr>
+            <tr>
+                <td><div class="status-circle red" onclick="changeStatus(this)"></div></td>
+                <td>DR 30cm x1</td>
+                <td>Bandeja</td>
+                <td>Bandeja Dorada</td>
+                <td>$700,00</td>
+                <td><textarea></textarea></td>
+            </tr>
+            <tr>
+                <td><div class="status-circle red" onclick="changeStatus(this)"></div></td>
+                <td>DR 30cm x10</td>
+                <td>Bandeja</td>
+                <td>Bandeja Dorada</td>
+                <td>$5.300,00</td>
+                <td><textarea></textarea></td>
+            </tr>
+            <tr>
+                <td><div class="status-circle red" onclick="changeStatus(this)"></div></td>
+                <td>DR 30cm x50</td>
+                <td>Bandeja</td>
+                <td>Bandeja Dorada</td>
+                <td>$24.100,00</td>
+                <td><textarea></textarea></td>
+            </tr>
+            <tr>
+                <td><div class="status-circle red" onclick="changeStatus(this)"></div></td>
+                <td>DR 32cm x1</td>
+                <td>Bandeja</td>
+                <td>Bandeja Dorada</td>
+                <td>$700,00</td>
+                <td><textarea></textarea></td>
+            </tr>
+            <tr>
+                <td><div class="status-circle red" onclick="changeStatus(this)"></div></td>
+                <td>DR 32cm x10</td>
+                <td>Bandeja</td>
+                <td>Bandeja Dorada</td>
+                <td>$5.400,00</td>
+                <td><textarea></textarea></td>
+            </tr>
+            <tr>
+                <td><div class="status-circle red" onclick="changeStatus(this)"></div></td>
+                <td>DR 32cm x50</td>
+                <td>Bandeja</td>
+                <td>Bandeja Dorada</td>
+                <td>$24.600,00</td>
+                <td><textarea></textarea></td>
+            </tr>
+            <tr>
+                <td><div class="status-circle red" onclick="changeStatus(this)"></div></td>
+                <td>DR 35cm x1</td>
+                <td>Bandeja</td>
+                <td>Bandeja Dorada</td>
+                <td>$800,00</td>
+                <td><textarea></textarea></td>
+            </tr>
+            <tr>
+                <td><div class="status-circle red" onclick="changeStatus(this)"></div></td>
+                <td>DR 35cm x10</td>
+                <td>Bandeja</td>
+                <td>Bandeja Dorada</td>
+                <td>$6.000,00</td>
+                <td><textarea></textarea></td>
+            </tr>
+            <tr>
+                <td><div class="status-circle red" onclick="changeStatus(this)"></div></td>
+                <td>DR 35cm x50</td>
+                <td>Bandeja</td>
+                <td>Bandeja Dorada</td>
+                <td>$27.000,00</td>
+                <td><textarea></textarea></td>
+            </tr>
+            <tr>
+                <td><div class="status-circle red" onclick="changeStatus(this)"></div></td>
+                <td>PP 4x25</td>
+                <td>Bolsa</td>
+                <td>Polipropileno</td>
+                <td>$1.400,00</td>
+                <td><textarea></textarea></td>
+            </tr>
+            <tr>
+                <td><div class="status-circle red" onclick="changeStatus(this)"></div></td>
+                <td>PP 5x20</td>
+                <td>Bolsa</td>
+                <td>Polipropileno</td>
+                <td>$1.300,00</td>
+                <td><textarea></textarea></td>
+            </tr>
+            <tr>
+                <td><div class="status-circle red" onclick="changeStatus(this)"></div></td>
+                <td>PP 5x25</td>
+                <td>Bolsa</td>
+                <td>Polipropileno</td>
+                <td>$1.400,00</td>
+                <td><textarea></textarea></td>
+            </tr>
+            <tr>
+                <td><div class="status-circle red" onclick="changeStatus(this)"></div></td>
+                <td>PP 5x30</td>
+                <td>Bolsa</td>
+                <td>Polipropileno</td>
+                <td>$1.400,00</td>
+                <td><textarea></textarea></td>
+            </tr>
+            <tr>
+                <td><div class="status-circle red" onclick="changeStatus(this)"></div></td>
+                <td>PP 6x10</td>
+                <td>Bolsa</td>
+                <td>Polipropileno</td>
+                <td>$1.100,00</td>
+                <td><textarea></textarea></td>
+            </tr>
+            <tr>
+                <td><div class="status-circle red" onclick="changeStatus(this)"></div></td>
+                <td>PP 6x25</td>
+                <td>Bolsa</td>
+                <td>Polipropileno</td>
+                <td>$1.500,00</td>
+                <td><textarea></textarea></td>
+            </tr>
+            <tr>
+                <td><div class="status-circle red" onclick="changeStatus(this)"></div></td>
+                <td>PP 6x30</td>
+                <td>Bolsa</td>
+                <td>Polipropileno</td>
+                <td>$1.800,00</td>
+                <td><textarea></textarea></td>
+            </tr>
+            <tr>
+                <td><div class="status-circle red" onclick="changeStatus(this)"></div></td>
+                <td>PP 8x10</td>
+                <td>Bolsa</td>
+                <td>Polipropileno</td>
+                <td>$1.100,00</td>
+                <td><textarea></textarea></td>
+            </tr>
+            <tr>
+                <td><div class="status-circle red" onclick="changeStatus(this)"></div></td>
+                <td>PP 8x15</td>
+                <td>Bolsa</td>
+                <td>Polipropileno</td>
+                <td>$1.200,00</td>
+                <td><textarea></textarea></td>
+            </tr>
+            <tr>
+                <td><div class="status-circle red" onclick="changeStatus(this)"></div></td>
+                <td>PP 8x30</td>
+                <td>Bolsa</td>
+                <td>Polipropileno</td>
+                <td>$1.700,00</td>
+                <td><textarea></textarea></td>
+            </tr>
+            <tr>
+                <td><div class="status-circle red" onclick="changeStatus(this)"></div></td>
+                <td>PP 10x15</td>
+                <td>Bolsa</td>
+                <td>Polipropileno</td>
+                <td>$900,00</td>
+                <td><textarea></textarea></td>
+            </tr>
+            <tr>
+                <td><div class="status-circle red" onclick="changeStatus(this)"></div></td>
+                <td>PP 10x20</td>
+                <td>Bolsa</td>
+                <td>Polipropileno</td>
+                <td>$1.000,00</td>
+                <td><textarea></textarea></td>
+            </tr>
+            <tr>
+                <td><div class="status-circle red" onclick="changeStatus(this)"></div></td>
+                <td>PP 10x25</td>
+                <td>Bolsa</td>
+                <td>Polipropileno</td>
+                <td>$1.100,00</td>
+                <td><textarea></textarea></td>
+            </tr>
+            <tr>
+                <td><div class="status-circle red" onclick="changeStatus(this)"></div></td>
+                <td>PP 10x30</td>
+                <td>Bolsa</td>
+                <td>Polipropileno</td>
+                <td>$1.300,00</td>
+                <td><textarea></textarea></td>
+            </tr>
+            <tr>
+                <td><div class="status-circle red" onclick="changeStatus(this)"></div></td>
+                <td>PP 10x35</td>
+                <td>Bolsa</td>
+                <td>Polipropileno</td>
+                <td>$1.400,00</td>
+                <td><textarea></textarea></td>
+            </tr>
+            <tr>
+                <td><div class="status-circle red" onclick="changeStatus(this)"></div></td>
+                <td>PP 12x20</td>
+                <td>Bolsa</td>
+                <td>Polipropileno</td>
+                <td>$1.200,00</td>
+                <td><textarea></textarea></td>
+            </tr>
+            <tr>
+                <td><div class="status-circle red" onclick="changeStatus(this)"></div></td>
+                <td>PP 12x25</td>
+                <td>Bolsa</td>
+                <td>Polipropileno</td>
+                <td>$1.400,00</td>
+                <td><textarea></textarea></td>
+            </tr>
+            <tr>
+                <td><div class="status-circle red" onclick="changeStatus(this)"></div></td>
+                <td>PP 12x30</td>
+                <td>Bolsa</td>
+                <td>Polipropileno</td>
+                <td>$1.400,00</td>
+                <td><textarea></textarea></td>
+            </tr>
+            <tr>
+                <td><div class="status-circle red" onclick="changeStatus(this)"></div></td>
+                <td>PP 15x20</td>
+                <td>Bolsa</td>
+                <td>Polipropileno</td>
+                <td>$1.600,00</td>
+                <td><textarea></textarea></td>
+            </tr>
+            <tr>
+                <td><div class="status-circle red" onclick="changeStatus(this)"></div></td>
+                <td>PP 15x25</td>
+                <td>Bolsa</td>
+                <td>Polipropileno</td>
+                <td>$1.700,00</td>
+                <td><textarea></textarea></td>
+            </tr>
+            <tr>
+                <td><div class="status-circle red" onclick="changeStatus(this)"></div></td>
+                <td>PP 15x30</td>
+                <td>Bolsa</td>
+                <td>Polipropileno</td>
+                <td>$1.800,00</td>
+                <td><textarea></textarea></td>
+            </tr>
+            <tr>
+                <td><div class="status-circle red" onclick="changeStatus(this)"></div></td>
+                <td>PP 15x40</td>
+                <td>Bolsa</td>
+                <td>Polipropileno</td>
+                <td>$2.300,00</td>
+                <td><textarea></textarea></td>
+            </tr>
+            <tr>
+                <td><div class="status-circle red" onclick="changeStatus(this)"></div></td>
+                <td>PP 20x25</td>
+                <td>Bolsa</td>
+                <td>Polipropileno</td>
+                <td>$2.000,00</td>
+                <td><textarea></textarea></td>
+            </tr>
+            <tr>
+                <td><div class="status-circle red" onclick="changeStatus(this)"></div></td>
+                <td>PP 20x30</td>
+                <td>Bolsa</td>
+                <td>Polipropileno</td>
+                <td>$2.100,00</td>
+                <td><textarea></textarea></td>
+            </tr>
+            <tr>
+                <td><div class="status-circle red" onclick="changeStatus(this)"></div></td>
+                <td>PP 20x40</td>
+                <td>Bolsa</td>
+                <td>Polipropileno</td>
+                <td>$2.900,00</td>
+                <td><textarea></textarea></td>
+            </tr>
+            <tr>
+                <td><div class="status-circle red" onclick="changeStatus(this)"></div></td>
+                <td>PP 25x35</td>
+                <td>Bolsa</td>
+                <td>Polipropileno</td>
+                <td>$3.200,00</td>
+                <td><textarea></textarea></td>
+            </tr>
+            <tr>
+                <td><div class="status-circle red" onclick="changeStatus(this)"></div></td>
+                <td>PP 30x40</td>
+                <td>Bolsa</td>
+                <td>Polipropileno</td>
+                <td>$3.700,00</td>
+                <td><textarea></textarea></td>
+            </tr>
+            <tr>
+                <td><div class="status-circle red" onclick="changeStatus(this)"></div></td>
+                <td>PP 35x45</td>
+                <td>Bolsa</td>
+                <td>Polipropileno</td>
+                <td>$4.800,00</td>
+                <td><textarea></textarea></td>
+            </tr>
+            <tr>
+                <td><div class="status-circle red" onclick="changeStatus(this)"></div></td>
+                <td>PP 40x50</td>
+                <td>Bolsa</td>
+                <td>Polipropileno</td>
+                <td>$6.000,00</td>
+                <td><textarea></textarea></td>
+            </tr>
+            <tr>
+                <td><div class="status-circle red" onclick="changeStatus(this)"></div></td>
+                <td>PP 50x60</td>
+                <td>Bolsa</td>
+                <td>Polipropileno</td>
+                <td>$8.800,00</td>
+                <td><textarea></textarea></td>
+            </tr>
+            <tr>
+                <td><div class="status-circle red" onclick="changeStatus(this)"></div></td>
+                <td>PP 50x70</td>
+                <td>Bolsa</td>
+                <td>Polipropileno</td>
+                <td>$11.000,00</td>
+                <td><textarea></textarea></td>
+            </tr>
+            <tr>
+                <td><div class="status-circle red" onclick="changeStatus(this)"></div></td>
+                <td>Baggu 15x20</td>
+                <td>Bolsa</td>
+                <td>Bolsa Arranque</td>
+                <td>$1.600,00</td>
+                <td><textarea></textarea></td>
+            </tr>
+            <tr>
+                <td><div class="status-circle red" onclick="changeStatus(this)"></div></td>
+                <td>Baggu 15x25</td>
+                <td>Bolsa</td>
+                <td>Bolsa Arranque</td>
+                <td>$1.900,00</td>
+                <td><textarea></textarea></td>
+            </tr>
+            <tr>
+                <td><div class="status-circle red" onclick="changeStatus(this)"></div></td>
+                <td>Baggu 20x30</td>
+                <td>Bolsa</td>
+                <td>Bolsa Arranque</td>
+                <td>$2.700,00</td>
+                <td><textarea></textarea></td>
+            </tr>
+            <tr>
+                <td><div class="status-circle red" onclick="changeStatus(this)"></div></td>
+                <td>Baggu 25x35</td>
+                <td>Bolsa</td>
+                <td>Bolsa Arranque</td>
+                <td>$3.300,00</td>
+                <td><textarea></textarea></td>
+            </tr>
+            <tr>
+                <td><div class="status-circle red" onclick="changeStatus(this)"></div></td>
+                <td>Baggu 30x40</td>
+                <td>Bolsa</td>
+                <td>Bolsa Arranque</td>
+                <td>$4.200,00</td>
+                <td><textarea></textarea></td>
+            </tr>
+            <tr>
+                <td><div class="status-circle red" onclick="changeStatus(this)"></div></td>
+                <td>Baggu 35x45</td>
+                <td>Bolsa</td>
+                <td>Bolsa Arranque</td>
+                <td>$3.300,00</td>
+                <td><textarea></textarea></td>
+            </tr>
+            <tr>
+                <td><div class="status-circle red" onclick="changeStatus(this)"></div></td>
+                <td>Baggu 40x50</td>
+                <td>Bolsa</td>
+                <td>Bolsa Arranque</td>
+                <td>$3.700,00</td>
+                <td><textarea></textarea></td>
+            </tr>
+            <tr>
+                <td><div class="status-circle red" onclick="changeStatus(this)"></div></td>
+                <td>Arranque Mas 15x20</td>
+                <td>Bolsa</td>
+                <td>Bolsa Arranque</td>
+                <td>$2.100,00</td>
+                <td><textarea></textarea></td>
+            </tr>
+            <tr>
+                <td><div class="status-circle red" onclick="changeStatus(this)"></div></td>
+                <td>Arranque Mas 15x25</td>
+                <td>Bolsa</td>
+                <td>Bolsa Arranque</td>
+                <td>$2.500,00</td>
+                <td><textarea></textarea></td>
+            </tr>
+            <tr>
+                <td><div class="status-circle red" onclick="changeStatus(this)"></div></td>
+                <td>Arranque Mas 20x30</td>
+                <td>Bolsa</td>
+                <td>Bolsa Arranque</td>
+                <td>$4.200,00</td>
+                <td><textarea></textarea></td>
+            </tr>
+            <tr>
+                <td><div class="status-circle red" onclick="changeStatus(this)"></div></td>
+                <td>Arranque Mas 25x35</td>
+                <td>Bolsa</td>
+                <td>Bolsa Arranque</td>
+                <td>$5.400,00</td>
+                <td><textarea></textarea></td>
+            </tr>
+            <tr>
+                <td><div class="status-circle red" onclick="changeStatus(this)"></div></td>
+                <td>Arranque Mas 30x40</td>
+                <td>Bolsa</td>
+                <td>Bolsa Arranque</td>
+                <td>$7.100,00</td>
+                <td><textarea></textarea></td>
+            </tr>
+            <tr>
+                <td><div class="status-circle red" onclick="changeStatus(this)"></div></td>
+                <td>Arranque Mas 35x45</td>
+                <td>Bolsa</td>
+                <td>Bolsa Arranque</td>
+                <td>$5.400,00</td>
+                <td><textarea></textarea></td>
+            </tr>
+            <tr>
+                <td><div class="status-circle red" onclick="changeStatus(this)"></div></td>
+                <td>Arranque Mas 40x50</td>
+                <td>Bolsa</td>
+                <td>Bolsa Arranque</td>
+                <td>$6.300,00</td>
+                <td><textarea></textarea></td>
+            </tr>
+            <tr>
+                <td><div class="status-circle red" onclick="changeStatus(this)"></div></td>
+                <td>Rolan 25x35</td>
+                <td>Bolsa</td>
+                <td>Bolsa Arranque</td>
+                <td>$4.800,00</td>
+                <td><textarea></textarea></td>
+            </tr>
+            <tr>
+                <td><div class="status-circle red" onclick="changeStatus(this)"></div></td>
+                <td>Rolan 30x40</td>
+                <td>Bolsa</td>
+                <td>Bolsa Arranque</td>
+                <td>$4.800,00</td>
+                <td><textarea></textarea></td>
+            </tr>
+            <tr>
+                <td><div class="status-circle red" onclick="changeStatus(this)"></div></td>
+                <td>Rolan 35x45</td>
+                <td>Bolsa</td>
+                <td>Bolsa Arranque</td>
+                <td>$4.800,00</td>
+                <td><textarea></textarea></td>
+            </tr>
+            <tr>
+                <td><div class="status-circle red" onclick="changeStatus(this)"></div></td>
+                <td>Rolan 50x70</td>
+                <td>Bolsa</td>
+                <td>Bolsa Arranque</td>
+                <td>$4.800,00</td>
+                <td><textarea></textarea></td>
+            </tr>
+            <tr>
+                <td><div class="status-circle red" onclick="changeStatus(this)"></div></td>
+                <td>Rolan 70x90</td>
+                <td>Bolsa</td>
+                <td>Bolsa Arranque</td>
+                <td>$5.950,00</td>
+                <td><textarea></textarea></td>
+            </tr>
+            <tr>
+                <td><div class="status-circle red" onclick="changeStatus(this)"></div></td>
+                <td>Rolan 60x90</td>
+                <td>Bolsa</td>
+                <td>Bolsa Arranque</td>
+                <td>$9.500,00</td>
+                <td><textarea></textarea></td>
+            </tr>
+        </tbody>
+    </table>
+</body>
+</html>
